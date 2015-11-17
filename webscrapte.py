@@ -58,7 +58,8 @@ def getCaptionSinglePage(url, soup):
 urlTest = u"http://www.newyorksocialdiary.com/party-pictures/2015/goodwill-and-gods-love"
 url, soup = requestSinglePage(urlTest)
 sampleCaption = getCaptionSinglePage(url, soup)
-sampleCaption[0]
+sampleKey = sampleCaption.keys()[0]
+sampleCaption[sampleKey]
 
 
 # get full url 
