@@ -38,6 +38,7 @@ def requestSinglePage(url):
         soup = BeautifulSoup(r.text)
         
     return soup 
+     
     
 def getCaptionSinglePage(soup):
     """
@@ -54,17 +55,25 @@ def getCaptionSinglePage(soup):
     a list of all photo captions for the given url
 
     """
-    soupList = soup.select('div.photocaption')
-    if soupList:
-        captions = []
-        for singleCaptionSoup in soupList:
+    soupListPhoto = soup.select('div.photocaption')
+    soupListFont = soup.select('div font')
+    captions = []
+    
+    if soupListPhoto:       
+        for singleCaptionSoup in soupListPhoto:
             caption = singleCaptionSoup.text
             #SinglePageCaption(eventID = eventID, caption = caption)
             captions.append(caption)
-        return captions
-    else:
-        return []
-
+            
+    if soupListFont:
+        for singleCaptionSoup in soupListFont:
+            caption = singleCaptionSoup.text
+            #SinglePageCaption(eventID = eventID, caption = caption)
+            captions.append(caption)
+            
+    return captions
+    
+    
 def scrapeSinglePage(url):
     soup = requestSinglePage(url)
     return getCaptionSinglePage(soup)
@@ -75,15 +84,19 @@ def scrapeAllUrls(fullUrls):
         allPages[url] = scrapeSinglePage(url)
     return allPages
     
-
+ 
 
 if __name__ == "__main__":
     # get full url 
     urlPath = os.path.join(BASE_DIRECTORY, "urls.p")
+    #eventPath = os.path.join(BASE_DIRECTORY, "event_time.p")
+    
     urls = cPickle.load(open(urlPath, "rb"))
+    #eventTime = cPickle.load(open(eventPath, "rb"))
+    
     baseUrl = u"http://www.newyorksocialdiary.com"
     fullUrls = [baseUrl+url for url in urls]
     allCaptions = scrapeAllUrls(fullUrls)
-    outputPath = os.path.join(BASE_DIRECTORY, 'allCaptions.p')
+    outputPath = os.path.join(BASE_DIRECTORY, 'allCaptionsNew.p')
     cPickle.dump(allCaptions, open(outputPath, 'wb'))
 
