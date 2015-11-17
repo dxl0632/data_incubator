@@ -4,18 +4,25 @@ extract contents for urls, apply filter to screen before 2014 Dec
 """
 
 import matplotlib
-#import seaborn as sns
+import pdb
+import cPickle
 import requests
 from bs4 import BeautifulSoup
 
 url = "http://www.newyorksocialdiary.com/party-pictures"
-manu = requests.get(url, params={"page":3})
-#print manu.url
-#print manu.text[:1000]
-soup = BeautifulSoup(manu.text)
-parent = BeautifulSoup(soup.find_all('div', attrs={'class': 'view-content'}).text)
-
-url = []
-for a in parent.select('div.view-content a', href=True, ):
-    print "Found the URL:", a['href']
-
+#page_num = 0
+urls = []
+for page_num in xrange(26):
+    manu = requests.get(url, params={"page":page_num})
+    soup = BeautifulSoup(manu.text, "lxml")
+    parent = soup.find('div', attrs={'class': 'view-content'})
+    for x in parent.find_all('a', href=True):
+        time = x.find_parent().find_parent().find_next_sibling().text
+        if int(time.split()[3])<2014 or (int(time.split()[3])==2014 and time.split()[1]!='December'):
+            urls.append(x['href'])
+    page_num += 1
+    #print page_num
+    #print len(urls)
+cPickle.dump(urls, open('urls.p', 'wb'))
+pdb.set_trace()
+#urls = cPickle.load(open('urls.p', 'rb'))
