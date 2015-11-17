@@ -29,6 +29,7 @@ def requestSinglePage(url):
     soup: a soup object for the given url
     
     """
+<<<<<<< HEAD
     try:
         r = requests.get(url)
     except ConnectionError as e:
@@ -37,6 +38,10 @@ def requestSinglePage(url):
     if not isinstance(r, str):
         soup = BeautifulSoup(r.text)
         
+=======
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text)
+>>>>>>> d8dc7d56487a35948da26858fe2270f09d701431
     return soup 
     
 def getCaptionSinglePage(soup):
