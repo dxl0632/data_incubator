@@ -10,6 +10,7 @@ sys.path.append("/Users/Dao/Desktop/GHRepo/data_incubator")
 import os
 import cPickle
 import requests
+from requests.exceptions import  ConnectionError
 from bs4 import BeautifulSoup
 
 from utils import BASE_DIRECTORY
@@ -28,8 +29,14 @@ def requestSinglePage(url):
     soup: a soup object for the given url
     
     """
-    r = requests.get(url, params = {"limit" : 1000})
-    soup = BeautifulSoup(r.text)
+    try:
+        r = requests.get(url)
+    except ConnectionError as e:
+        r = 'No response'
+    
+    if not isinstance(r, str):
+        soup = BeautifulSoup(r.text)
+        
     return soup 
     
 def getCaptionSinglePage(soup):
@@ -72,11 +79,11 @@ def scrapeAllUrls(fullUrls):
 
 if __name__ == "__main__":
     # get full url 
-    urls = cPickle.load(open("/Users/Dao/Desktop/GHRepo/data_incubator/urls.p", "rb"))
+    urlPath = os.path.join(BASE_DIRECTORY, "urls.p")
+    urls = cPickle.load(open(urlPath, "rb"))
     baseUrl = u"http://www.newyorksocialdiary.com"
     fullUrls = [baseUrl+url for url in urls]
     allCaptions = scrapeAllUrls(fullUrls)
     outputPath = os.path.join(BASE_DIRECTORY, 'allCaptions.p')
     cPickle.dump(allCaptions, open(outputPath, 'wb'))
-
 
