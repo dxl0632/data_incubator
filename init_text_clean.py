@@ -19,12 +19,12 @@ def del_long(string, maxlen):
 
     """
     if len(string) > maxlen:
-        return 
+        return ''
     else:
         return string
         
    
-def seperate_caption(SinglePageCap):
+def seperate_caption(singlePageCap):
     """
     initial cleaning for single page caption:
     1. remove leading and trailing white space
@@ -40,18 +40,19 @@ def seperate_caption(SinglePageCap):
     cleaned and seperated SinglePageCap
 
     """
-    for i,s in enumerate(SinglePageCap):
-        s=del_long(s, 250)
-        if len(s)>0:
-            s=s.strip()
-            parts = re.split(';', s)
-            if len(parts) <= 1:
-                SinglePageCap[i]  = s
-            else:
-                SinglePageCap[i]  = parts[0]
-                for extra in parts[1:]:
-                    SinglePageCap.append(extra)
-    return [ls for ls in SinglePageCap if len(s)>0]
+    if singlePageCap:
+        for i,s in enumerate(singlePageCap):
+            s=del_long(s, 250)
+            if len(s)>0:
+                s=s.strip()
+                parts = re.split(';', s)
+                if len(parts) <= 1:
+                    singlePageCap[i]  = s
+                else:
+                    singlePageCap[i]  = parts[0]
+                    for extra in parts[1:]:
+                        singlePageCap.append(extra)
+    return [ls for ls in singlePageCap if len(s)>0]
     
 #example
     
