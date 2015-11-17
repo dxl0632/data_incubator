@@ -28,7 +28,7 @@ def requestSinglePage(url):
     soup: a soup object for the given url
     
     """
-    r = requests.get(url, params = {"limit" : 1000})
+    r = requests.get(url)
     soup = BeautifulSoup(r.text)
     return soup 
     
