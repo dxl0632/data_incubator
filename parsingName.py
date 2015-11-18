@@ -6,6 +6,8 @@ Created on Tue Nov 17 12:34:12 2015
 """
 import os 
 import cPickle
+import sys
+sys.path.append("/Users/Dao/Desktop/GHRepo/data_incubator")
 
 from utils import BASE_DIRECTORY
 from nameparser import HumanName
@@ -35,7 +37,7 @@ def parsingName(rawName):
     middle = humanName.middle
     last = humanName.last
     suffix = humanName.suffix
-    name = " ".join([first, middle, last, suffix]).strip()
+    name = " ".join([first,  last]).strip()
     nameNoExtraSpace = " ".join(name.split())
     return nameNoExtraSpace
     
