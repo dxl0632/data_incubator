@@ -84,7 +84,8 @@ def getCaptionSinglePage(soup):
     
 def scrapeSinglePage(url):
     soup = requestSinglePage(url)
-    return getCaptionSinglePage(soup)
+    if soup is not None:
+        return getCaptionSinglePage(soup)
     
 def scrapeAllUrls(fullUrls, noisy = False):
     allPages = {}
@@ -109,7 +110,12 @@ if __name__ == "__main__":
     
     #p = Pool(20) # have 20 processes
     #allCaptions = p.map(scrapeAllUrls, fullUrls)
-    allCaptions = scrapeAllUrls(fullUrls)
+    allCaptions = scrapeAllUrls(fullUrls, noisy=True)
+    # deal with NoneType in list
+    for key in allCaptions:
+        if allCaptions[key] is None:
+            allCaptions[key] = []
+            
     outputPath = os.path.join(BASE_DIRECTORY, 'allCaptionsNew.p')
     cPickle.dump(allCaptions, open(outputPath, 'wb'))
 
