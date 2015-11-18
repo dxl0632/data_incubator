@@ -6,9 +6,11 @@ Created on Mon Nov 16 16:18:23 2015
 """
 import sys
 sys.path.append("/Users/Dao/Desktop/GHRepo/data_incubator")
-
 import os
 import cPickle
+from multiprocessing import Pool
+from itertools import chain
+
 import requests
 from requests.exceptions import  ConnectionError
 from bs4 import BeautifulSoup
@@ -36,9 +38,24 @@ def requestSinglePage(url):
     
     if not isinstance(r, str):
         soup = BeautifulSoup(r.text)
+        return soup 
         
-    return soup 
+
      
+def getTagList(soup):
+    tagLists = []
+    tagLists.append(soup.select('div.photocaption'))
+    tagLists.append(soup.select('div font'))
+    tagLists.append(soup.select('td.photocaption'))
+    return tagLists
+    
+def tagToCaption(tagList):
+    captions = []
+    for tag in tagList:
+        caption = tag.text
+        if caption:
+            captions.append(caption)
+    return captions
     
 def getCaptionSinglePage(soup):
     """
@@ -55,32 +72,25 @@ def getCaptionSinglePage(soup):
     a list of all photo captions for the given url
 
     """
-    soupListPhoto = soup.select('div.photocaption')
-    soupListFont = soup.select('div font')
-    captions = []
     
-    if soupListPhoto:       
-        for singleCaptionSoup in soupListPhoto:
-            caption = singleCaptionSoup.text
-            #SinglePageCaption(eventID = eventID, caption = caption)
-            captions.append(caption)
-            
-    if soupListFont:
-        for singleCaptionSoup in soupListFont:
-            caption = singleCaptionSoup.text
-            #SinglePageCaption(eventID = eventID, caption = caption)
-            captions.append(caption)
-            
-    return captions
+    tagLists = getTagList(soup)
+    captions = []
+    for tagList in tagLists:
+        if tagList:
+            caption = tagToCaption(tagList)
+            captions.append(caption)      
+    return list(chain(*captions))
     
     
 def scrapeSinglePage(url):
     soup = requestSinglePage(url)
     return getCaptionSinglePage(soup)
     
-def scrapeAllUrls(fullUrls):
+def scrapeAllUrls(fullUrls, noisy = False):
     allPages = {}
     for url in fullUrls:
+        if noisy: 
+            print url
         allPages[url] = scrapeSinglePage(url)
     return allPages
     
@@ -96,6 +106,9 @@ if __name__ == "__main__":
     
     baseUrl = u"http://www.newyorksocialdiary.com"
     fullUrls = [baseUrl+url for url in urls]
+    
+    #p = Pool(20) # have 20 processes
+    #allCaptions = p.map(scrapeAllUrls, fullUrls)
     allCaptions = scrapeAllUrls(fullUrls)
     outputPath = os.path.join(BASE_DIRECTORY, 'allCaptionsNew.p')
     cPickle.dump(allCaptions, open(outputPath, 'wb'))
