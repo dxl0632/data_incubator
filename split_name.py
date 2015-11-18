@@ -13,7 +13,7 @@ import init_text_clean
 import cPickle
 import os
 from utils import BASE_DIRECTORY
-
+from shortName import shortName
 
 
 #keys = example.keys()
@@ -78,12 +78,12 @@ def appendLastName(inputNameList):
 
 
 def strip_caption(caption):
+    caption = re.sub(r' . ', ',', caption)
     caption = re.sub('\(.*\)', '', caption)
     caption = re.sub(r' [a-z]+', ',', caption)
     caption = re.sub(r'The', '', caption)
     caption = re.sub(r'[^a-zA-Z ,-]', '', caption)
     caption = re.sub(r'NYSD Contents', '', caption)
-    caption = re.sub(r' . ', ',', caption)
     caption = re.sub(r'\.', '', caption)
     caption = re.sub(r',+', ',', caption)
     caption = caption.strip()
@@ -114,6 +114,7 @@ def caption_parse(caption_dict):
                 else: 
                     if len(name.split())>0:
                         name_list.append(name.strip())
+            name_list = shortName(name_list)
             name_list = appendLastName(name_list)
             page_list.append(name_list)
         name_dic[key]=page_list
@@ -126,14 +127,6 @@ if __name__ == "__main__":
     name_dic = caption_parse(cleaned_caption)
 
     
-
-
-    
-    
-    
-    
-    
-
 
 
 
