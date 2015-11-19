@@ -19,47 +19,15 @@ from shortName import shortName
 #keys = example.keys()
 #example[keys[0]][0]
 def appendLastName(inputNameList):
-    """
-    Created on Wed Nov 18 11:27:19 2015
-    
-    @author: Bingyi
-    """
-    
-    """
-    import re
-    
-    str ="A, B, C, and D Smith"
-    
-    def name_split(str):
-        if 'and' in str or ',' in str:
-            str2=str.replace('and', '')
-            
-            lastname=str2.rsplit(None, 1)[-1]
-            #cut the last word
-            str2=str2.rsplit(' ', 1)[0]
-            print "str2={%s}" % str2
-            
-            namelist1=str2.split(',')        
-    
-            namelist2=[x.strip()+' '+lastname for x in namelist1]
-            return namelist2
-        else:
-            return str
-    
-    namelist=name_split(str)
-    namelist
-    
-    namelist=name_split("bingyi yang")
-    namelist
-    """
     numWordsList=[x.strip().count(' ')+1 for x in inputNameList]
     
     currIndividual=0
     LastNames=[]
     for x  in numWordsList:
         if x>1:
-            LastNames += inputNameList[currIndividual].split()[1]
-        currIndividual+=1     
+            LastNames.append( inputNameList[currIndividual].split(" ")[1])
+        currIndividual+=1
+    #print LastNames      
     
     currIndividual=0
     outputNameList=[]
@@ -72,20 +40,28 @@ def appendLastName(inputNameList):
         else:
             thisName=inputNameList[currIndividual]
             del LastNames[0]
+        #print thisName
         outputNameList+=[thisName]
         currIndividual+=1
     return outputNameList      
 
 
+
 def strip_caption(caption):
     caption = re.sub(r' . ', ',', caption)
     caption = re.sub('\(.*\)', '', caption)
-    caption = re.sub(r' [a-z]+', ',', caption)
-    caption = re.sub(r'The', '', caption)
-    caption = re.sub(r'[^a-zA-Z ,-]', '', caption)
+    caption = re.sub(r' [a-z]+[\S]*$', ' ', caption)
+    caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
+    caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
+    caption = re.sub(r'^[a-z]+[\S]* ', ' ', caption) 
+    caption = re.sub(r' [A-Z]. ', ' ', caption)
+    caption = re.sub(r'The', ',', caption)
+    caption = re.sub(r'[^a-zA-Z ,-]', ' ', caption)
     caption = re.sub(r'NYSD Contents', '', caption)
+    caption = re.sub(r'Company Team', '', caption)
     caption = re.sub(r'\.', '', caption)
     caption = re.sub(r',+', ',', caption)
+    caption = re.sub(r' +', ' ', caption)
     caption = caption.strip()
     return caption
 
@@ -125,6 +101,9 @@ if __name__ == "__main__":
     allCaptions = cPickle.load(open(captionPath, 'rb'))
     cleaned_caption = caption_clean(allCaptions)
     name_dic = caption_parse(cleaned_caption)
+    outputPath = os.path.join(BASE_DIRECTORY, 'name_dic.p')
+    cPickle.dump(name_dic, open(outputPath, 'wb'))       
+
 
     
 

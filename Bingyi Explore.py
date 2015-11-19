@@ -33,7 +33,7 @@ namelist=name_split("bingyi yang")
 namelist
 """
 
-inputNameList=["A", "B", "C D", "E", "F", "G H", "I", "J K"]
+inputNameList=["A", "B", "C Dannil", "E", "F", "G H", "I", "J Kdjkdfj"]
 
 # output: ['A D', 'B D', 'C D', 'E H', 'F H', 'G H', 'I K', 'J K']
 
@@ -45,7 +45,7 @@ def AppendLastName(inputNameList):
     LastNames=[]
     for x  in numWordsList:
         if x>1:
-            LastNames += inputNameList[currIndividual].split()[1]
+            LastNames.append( inputNameList[currIndividual].split(" ")[1])
         currIndividual+=1
     #print LastNames      
     
@@ -53,7 +53,10 @@ def AppendLastName(inputNameList):
     outputNameList=[]
     for x  in numWordsList:
         if x==1:
-            thisName=inputNameList[currIndividual]+" "+LastNames[0]
+            if len(LastNames)>0:
+                thisName=inputNameList[currIndividual]+" "+LastNames[0]
+            else:
+                thisName = inputNameList[currIndividual]
         else:
             thisName=inputNameList[currIndividual]
             del LastNames[0]
