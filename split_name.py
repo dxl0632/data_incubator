@@ -50,6 +50,7 @@ def appendLastName(inputNameList):
 def strip_caption(caption):
     caption = re.sub(r' . ', ',', caption)
     caption = re.sub('\(.*\)', '', caption)
+    caption = re.sub(r'[^a-zA-Z ,-]', ' ', caption)
     caption = re.sub(r' [a-z]+[\S]*$', ' ', caption)
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
@@ -57,16 +58,25 @@ def strip_caption(caption):
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
     caption = re.sub(r'^[a-z]+[\S]* ', ' ', caption) 
+    caption = re.sub(r'M.D.', ' ', caption)
     caption = re.sub(r' [A-Z]. ', ' ', caption)
+    caption = re.sub(r'3D', ' ', caption)
+    caption = re.sub(r'Close', ' ', caption)
+    caption = re.sub(r'to ', ' ', caption)
+    caption = re.sub(r'15th', ' ', caption)
     caption = re.sub(r'[^a-zA-Z][A-Z][^a-zA-Z]', ' ', caption)
-    caption = re.sub(r'The ', ',', caption)
-    caption = re.sub(r'[^a-zA-Z ,-]', ' ', caption)
+    caption = re.sub(r'^The,', '', caption)   
+    caption = re.sub(r'The ', ',', caption)    
     caption = re.sub(r'NYSD Contents', '', caption)
     caption = re.sub(r'Company Team', '', caption)
     caption = re.sub(r'Chicago', '', caption)
+    caption = re.sub(r'Photographs', '', caption)
     caption = re.sub(r'Board Member', '', caption)
+    caption = re.sub(r'Board', '', caption)
     caption = re.sub(r'Steering Committee', '', caption)
+    caption = re.sub(r'Medical Center', '', caption)
     caption = re.sub(r'New York', '', caption)
+    caption = re.sub(r'City Ballet', '', caption)
     caption = re.sub(r'\.', '', caption)
     caption = re.sub(r',+', ',', caption)
     caption = re.sub(r' +', ' ', caption)
@@ -137,7 +147,7 @@ def find_sth(dict):
     keys = dict.keys()
     for key in keys:
         for name_list in dict[key]:
-            if 'the' in name_list:
+            if 'City Ballet' in name_list:
                 return key, name_list
 
 
