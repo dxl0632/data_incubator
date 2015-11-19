@@ -53,12 +53,17 @@ def strip_caption(caption):
     caption = re.sub(r' [a-z]+[\S]*$', ' ', caption)
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
     caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
+    caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
+    caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
+    caption = re.sub(r' [a-z]+[\S]* ', ', ', caption)
     caption = re.sub(r'^[a-z]+[\S]* ', ' ', caption) 
     caption = re.sub(r' [A-Z]. ', ' ', caption)
+    caption = re.sub(r'[^a-zA-Z][A-Z][^a-zA-Z]', ' ', caption)
     caption = re.sub(r'The', ',', caption)
     caption = re.sub(r'[^a-zA-Z ,-]', ' ', caption)
     caption = re.sub(r'NYSD Contents', '', caption)
     caption = re.sub(r'Company Team', '', caption)
+    caption = re.sub(r'New York', '', caption)
     caption = re.sub(r'\.', '', caption)
     caption = re.sub(r',+', ',', caption)
     caption = re.sub(r' +', ' ', caption)
@@ -122,6 +127,15 @@ def check_num(dict):
             empty_id.append(key)
         raw_num += len(dict[key])
     return raw_num, empty_num, empty_id
-         
+       
+def find_sth(dict):
+#    caption_issue = []
+#    key_issue = ''
+    keys = dict.keys()
+    for key in keys:
+        for name_list in dict[key]:
+            if 'the' in name_list:
+                return key, name_list
+
 
 
