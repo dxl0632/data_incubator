@@ -59,7 +59,7 @@ def strip_caption(caption):
     caption = re.sub(r'^[a-z]+[\S]* ', ' ', caption) 
     caption = re.sub(r' [A-Z]. ', ' ', caption)
     caption = re.sub(r'[^a-zA-Z][A-Z][^a-zA-Z]', ' ', caption)
-    caption = re.sub(r'The', ',', caption)
+    caption = re.sub(r'The ', ',', caption)
     caption = re.sub(r'[^a-zA-Z ,-]', ' ', caption)
     caption = re.sub(r'NYSD Contents', '', caption)
     caption = re.sub(r'Company Team', '', caption)
