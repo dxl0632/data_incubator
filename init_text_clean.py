@@ -42,7 +42,7 @@ def seperate_caption(singlePageCap):
     """
     if singlePageCap:
         for i,s in enumerate(singlePageCap):
-            s=del_long(s, 250)
+            s=del_long(s, 150)
             if len(s)>0:
                 s=s.strip()
                 parts = re.split(';', s)
