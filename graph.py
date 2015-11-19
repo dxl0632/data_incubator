@@ -5,10 +5,9 @@ Created on Tue Nov 17 16:34:15 2015
 @author: Dao
 """
 from collections import defaultdict
-import matplotlib.pyplot as plt
 from itertools import combinations, chain
 import cPickle
-
+import os
 import networkx as nx
 import pandas as pd
 
@@ -44,7 +43,7 @@ def getNameTuples(allCaptions):
     
     
 urlNameTuple, G = getNameTuples(name_dic)
-
+G.remove_node('')
 allNodes = G.nodes()
 allDegree = G.degree(allNodes)
 
@@ -56,5 +55,9 @@ socialGraph = pd.DataFrame({
 socialGraph.sort(columns = 'Degree', ascending=False, inplace = True)
 socialGraph.shape
 
-
-
+out = []
+for i in xrange(100):
+    item = (socialGraph['Person'].iloc[i], socialGraph['Degree'].iloc[i])
+    out.append(item)
+outputPath = os.path.join(BASE_DIRECTORY, 'q1_answer.p')
+cPickle.dump(out, open(outputPath, 'wb'))   
