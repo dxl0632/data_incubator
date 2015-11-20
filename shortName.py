@@ -29,8 +29,8 @@ def shortName(nameList):
         newNameList=[]
         for string in nameList:
             string=string.strip()
-            if len(string.split()) >= 2:
-                string=' '.join(string.split()[-2:])
+            if len(string.split()) >= 4:
+                string=' '.join(string.split()[-3:])
             newString=parsingName(string)
             newNameList.append(newString)
     else:

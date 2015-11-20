@@ -25,7 +25,7 @@ def appendLastName(inputNameList):
     LastNames=[]
     for x  in numWordsList:
         if x>1:
-            LastNames.append( inputNameList[currIndividual].split(" ")[1])
+            LastNames.append( inputNameList[currIndividual].split(" ")[-1])
         currIndividual+=1
     #print LastNames      
     
@@ -103,11 +103,8 @@ def caption_parse(caption_dict):
             caption = strip_caption(caption)
             name_list = []       
             for name in re.split(',',caption):
-                if len(name.split())>2:
-                    name_list.append(name.strip().split()[-2].strip()+' '+name.strip().split()[-1].strip())
-                else: 
-                    if len(name.split())>0:
-                        name_list.append(name.strip())
+                if len(name.split())>0:
+                    name_list.append(name.strip())
             name_list = shortName(name_list)
             name_list = appendLastName(name_list)
             page_list.append(name_list)
