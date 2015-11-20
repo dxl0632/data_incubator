@@ -24,7 +24,7 @@ for key in name_dic.keys():
         graph.add_edges_from(list(itertools.combinations(name_list, 2)))
     
 graph.remove_node('')
-result = nx.pagerank(graph, alpha=0.85)
+result = nx.pagerank(graph, alpha=0.85, weight='weight',)
 
 num = np.percentile(result.values(), (109599./109699.)*100)
 keys_top = np.array(result.keys())[result.values()> num][0:100]
