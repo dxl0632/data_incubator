@@ -37,7 +37,7 @@ def parsingName(rawName):
     middle = humanName.middle
     last = humanName.last
     suffix = humanName.suffix
-    name = " ".join([first,  last]).strip()
+    name = " ".join([first, middle, last]).strip()
     nameNoExtraSpace = " ".join(name.split())
     return nameNoExtraSpace
     
