@@ -22,7 +22,9 @@ def namepair_tp_ls(dict):
         if dict[key]:
             for singlePicNmlist in dict[key]:
                 if singlePicNmlist:
-                    singlels=sorted(singlePicNmlist)
+                    single_set=set(singlePicNmlist)
+                    singlels=list(single_set)
+                    singlels=sorted(singlels)
                     singlels=[str for str in singlels if len(str)>0]
                     tpls=list(combinations(singlels, 2))
                     namepair_ls.extend(tpls)
@@ -45,10 +47,12 @@ for i,w in enumerate(sorted(unipair, key=unipair.get, reverse=True)):
         out.append(item)
         
         
-out
+print len(out[:100])
+out[:100]
 
-outputpath = os.path.join(default_dir, "q3_answer.p")
-cPickle.dump(out, open(outputpath, 'wb'))
+
+#outputpath = os.path.join(default_dir, "q3_answer.p")
+#cPickle.dump(out, open(outputpath, 'wb'))
 
 #def outTopNBF(dict,n):
 #    pass
@@ -65,7 +69,8 @@ cPickle.dump(out, open(outputpath, 'wb'))
 #test=namepair_tp_ls(testdict)
 #test_bf=Counter(test)
 
-
+#PathNameDict = os.path.join(default_dir, "q1_answer.p")
+#q1 = cPickle.load(open(PathNameDict, 'rb'))
   
 
 
