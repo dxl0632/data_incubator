@@ -90,4 +90,21 @@ for i in xrange(100):
     out.append(item)
     
 outputPath = os.path.join(BASE_DIRECTORY, 'q2_answer.p')
-cPickle.dump(out, open(outputPath, 'wb'))   
+cPickle.dump(out, open(outputPath, 'wb'))  
+
+
+# edges with highest weight
+bestFriends = sorted(G.edges(data=True), key=lambda (source,target,data): data['weight'] , reverse=True)
+
+out = []
+ 
+j=0
+for i in bestFriends: 
+    if i[0].strip() != i[1].strip():
+        item = ((i[0].strip(), i[1].strip()), i[2]['weight'])
+        out.append(item)
+
+        
+        
+out[:100]
+
