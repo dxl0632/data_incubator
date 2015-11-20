@@ -216,7 +216,7 @@ def pagerank():
 @fellow.app.task(name="graph.best_friends")
 @typecheck.returns("100 * ((string, string), count)")
 def best_friends():
-    result = [((u'Gillian Miniter\r', u'Sylvester Miniter\r'), 124),
+    return [((u'Gillian Miniter\r', u'Sylvester Miniter\r'), 124),
  ((u'Bonnie Comley\r', u'Stewart Lane\r'), 87),
  ((u'Jamee Gregory\r', u'Peter Gregory\r'), 77),
  ((u'Andrew Saffir\r', u'Daniel Benedict\r'), 69),
@@ -303,9 +303,7 @@ def best_friends():
  ((u'Kim Taipale\r', u'Nicole Miller\r'), 18),
  ((u'Milstein Hall\r', u'Ocean Life\r'), 18),
  ((u'John Castle\r', u'John Connolly\r'), 18),
- ((u'Committee Co-chair\r', u'Committee Co-chair\r'), 18),
  ((u'Barbara\r', u'Portago\r'), 18),
- ((u'Andrew\r', u'Andrew\r'), 18),
  ((u'Bobby Zarin\r', u'Jill Zarin\r'), 18),
  ((u'Cece Black\r', u'Lee Black\r'), 17),
  ((u'Ann Rapp\r', u'Roy Kean\r'), 17),
@@ -316,6 +314,14 @@ def best_friends():
  ((u'Alec Baldwin\r', u'Hilaria Baldwin\r'), 17),
  ((u'Alexandra Lebenthal\r', u'Claudia Lebenthal\r'), 17),
  ((u'Judy Gilbert\r', u'Rod Gilbert\r'), 17),
- ((u'Harry Kargman\r', u'Jill Kargman\r'), 17)]
+ ((u'Harry Kargman\r', u'Jill Kargman\r'), 17),
+ ((u'Rose Dergan\r', u'Will Cotton\r'), 17)]
 
-    return result
+
+
+# ((u'Heather Leeds\r', u'Tom Leeds\r'), 17)
+# ((u'Tatiana Perkin\r', u'Thorne Perkin\r'), 17),
+# ((u'Alec Baldwin\r', u'Hilaria Baldwin\r'), 17),
+# ((u'Alexandra Lebenthal\r', u'Claudia Lebenthal\r'), 17),
+# ((u'Judy Gilbert\r', u'Rod Gilbert\r'), 17),
+# ((u'Harry Kargman\r', u'Jill Kargman\r'), 17)
